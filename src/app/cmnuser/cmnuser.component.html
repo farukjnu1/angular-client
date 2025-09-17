@@ -1,0 +1,99 @@
+<div>
+  <h1 style="text-align:center">Welcome to Booking System</h1>
+
+  <h2>Add New {{ title }}</h2>
+
+  <form id="cmnuserForm" [formGroup]="cmnuserForm" #f="ngForm" (ngSubmit)="onSubmit()">
+    <div class="form-row">
+      <div class="form-group">
+        <label for="userName">user Name: </label>
+        <input type="text" id="userName" name="userName" formControlName="userName" class="form-control" placeholder="user Name" required
+               onfocus="this.placeholder=''" onblur="this.placeholder='user Name'" autocomplete="off" tabindex="1" />
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label for="userPass">User Pass: </label>
+        <input type="text" id="userPass" name="userPass" formControlName="userPass" class="form-control" placeholder="user Pass" required
+               onfocus="this.placeholder=''" onblur="this.placeholder='user Pass'" autocomplete="off" tabindex="2" />
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label for="role">Role: </label>
+        <select class="form-control" id="role" name="role" formControlName="role" required>
+          <option value="">-- Select Bus --</option>
+          <option *ngFor="let role of listRole" value={{role}}>{{role}}</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label for="fullName">Full Name: </label>
+        <input type="text" id="fullName" name="fullName" formControlName="fullName" class="form-control" placeholder="full Name" required
+               onfocus="this.placeholder=''" onblur="this.placeholder='full Name'" autocomplete="off" tabindex="2" />
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label for="mobile">Mobile: </label>
+        <input type="text" id="mobile" name="mobile" formControlName="mobile" class="form-control" placeholder="mobile" required
+               onfocus="this.placeholder=''" onblur="this.placeholder='mobile'" autocomplete="off" tabindex="2" />
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label for="email">Email: </label>
+        <input type="email" id="email" name="email" formControlName="email" class="form-control" placeholder="email" required
+               onfocus="this.placeholder=''" onblur="this.placeholder='email'" autocomplete="off" tabindex="2" />
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <button type="button" class="btn btn-secondary" (click)="reset()" tabindex="5">
+          <i class="fa fa-refresh"></i> Reset
+        </button>
+        <button type="submit" class="btn btn-primary" form="cmnuserForm" [disabled]="!f.valid" tabindex="4">
+          <i class="fa fa-check-square-o"></i> Save
+        </button>
+      </div>
+    </div>
+  </form>
+
+  <p *ngIf="!listCmnuser"><em>Loading...</em></p>
+  <h5>List of {{ title }}</h5>
+  <div style="height: 350px; overflow: auto">
+    <table class='table table-hover table-condensed table-striped' *ngIf="listCmnuser" border="1" cellpadding="4px">
+      <thead>
+        <tr>
+          <th>UserName</th>
+          <th>Role</th>
+          <th>FullName</th>
+          <th>Mobile</th>
+          <th>Email</th>
+          <th class="text-right">Options</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of listCmnuser">
+          <td>{{ item.userName }}</td>
+          <td>{{ item.role }}</td>
+          <td>{{ item.fullName }}</td>
+          <td>{{ item.mobile }}</td>
+          <td>{{ item.email }}</td>
+          <td>
+            <div class="pull-right">
+              <a href="#" title="Edit Record" class="btn btn-outline-secondary btn-sm waves-effect waves-light m-1" (click)="edit($event, item)">
+                <i class="fa fa-edit"></i> Edit
+              </a>
+              |
+              <a href="#" title="Delete Record" class="btn btn-outline-secondary btn-sm waves-effect waves-light m-1" (click)="delete($event, item)">
+                <i class="fa fa-trash-o"></i> Delete
+              </a>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

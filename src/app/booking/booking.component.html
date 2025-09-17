@@ -1,0 +1,212 @@
+<h1 style="text-align:center">Welcome to Booking System</h1>
+
+<div *ngIf="viewSearchSchedule">
+  <h2>To Book Seats Search From Availables </h2>
+  <div class="form-row">
+    <div class="form-group form-inline">
+      <label for="startPoint">Start Point</label>
+      <select class="form-control" id="startPoint" name="startPoint" [(ngModel)]="startPoint">
+        <option value="">-- Select Start Point --</option>
+        <option *ngFor="let route of listRoute" value={{route.startPoint}}>
+          {{route.startPoint}}
+        </option>
+      </select>
+      <label for="endPoint">End Point</label>
+      <select class="form-control" id="endPoint" name="endPoint" [(ngModel)]="endPoint">
+        <option value="">-- Select End Point --</option>
+        <option *ngFor="let route of listRoute" value={{route.endPoint}}>
+          {{route.endPoint}}
+        </option>
+      </select>
+      <button (click)="searchSchedule();" class="btn btn-info"><i class="fa fa-search"></i> Search</button>
+    </div>
+  </div>
+
+  <p *ngIf="!listSchedule"><em>Loading...</em></p>
+  <h4>List of {{ title }}</h4>
+  <div style="height: 350px; overflow: auto">
+    <table class='table table-hover table-condensed table-striped' *ngIf="listSchedule">
+      <thead>
+        <tr>
+          <th>DepartureTime</th>
+          <th>ArrivalTime</th>
+          <th>Number of Seat</th>
+          <th>Available Seat</th>
+          <th class="text-right">Options</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of listSchedule">
+          <td>{{ item.departureTime }}</td>
+          <td>{{ item.arrivalTime }}</td>
+          <td>{{ item.noOfSeat }}</td>
+          <td>{{ item.availableSeat }}</td>
+          <td>
+            <div class="pull-right">
+              <!--(click)="book($event, item)"-->
+              <a href="javascript:void(0)" (click)="booking($event, item)" title="Go to booking list" class="btn btn-outline-secondary btn-sm waves-effect waves-light m-1">
+                <i class="fa fa-hand-o-up"></i> Booking
+              </a>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div *ngIf="viewBooking">
+  <h4>Add New {{ title }}</h4>
+  <form id="bookingForm" [formGroup]="bookingForm" #f="ngForm" (ngSubmit)="onSubmit()">
+    <div class="row">
+      <div class="col-md-4">
+        <div class="form-row">
+          <div class="form-group">
+            <label for="customerName">Customer Name: </label>
+            <input type="text" id="customerName" name="customerName" formControlName="customerName" required class="form-control input-sm" placeholder="customer Name"
+                   onfocus="this.placeholder=''" onblur="this.placeholder='customer Name'" autocomplete="off" tabindex="1" />
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="cancelDate">Cancel Date: </label>
+            <input type="date" id="cancelDate" name="cancelDate" formControlName="cancelDate" class="form-control input-sm" placeholder="cancel Date"
+                   onfocus="this.placeholder=''" onblur="this.placeholder='cancel Date'" autocomplete="off" tabindex="4" />
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="customerMobile">Price: {{unitPrice}} X {{selectedSeats.length}}</label>
+            <input type="text" id="price" name="price" formControlName="price" required class="form-control input-sm" placeholder="price" value="{{selectedSeats.length * unitPrice}}"
+                   onfocus="this.placeholder=''" onblur="this.placeholder='price'" autocomplete="off" tabindex="3" />
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <button type="button" class="btn btn-info" (click)="backToSchedule();" tabindex="9">
+              <i class="fa fa-reply"></i> Back
+            </button>
+            <button type="button" class="btn btn-secondary" (click)="reset();" tabindex="7">
+              <i class="fa fa-refresh"></i> Reset
+            </button>
+            <button type="submit" class="btn btn-primary" form="bookingForm" tabindex="8">
+              <i class="fa fa-check-square-o"></i> Save
+            </button>
+          </div>
+        </div>
+
+      </div>
+      <div class="col-md-4">
+        <div class="form-row">
+          <div class="form-group">
+            <label for="customerMobile">Customer Mobile: </label>
+            <input type="text" id="customerMobile" name="customerMobile" formControlName="customerMobile" required class="form-control input-sm" placeholder="customer Mobile"
+                   onfocus="this.placeholder=''" onblur="this.placeholder='customer Mobile'" autocomplete="off" tabindex="2" />
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="returnAmount">Return Amount: </label>
+            <input type="text" id="returnAmount" name="returnAmount" formControlName="returnAmount" class="form-control input-sm" placeholder="return Amount"
+                   onfocus="this.placeholder=''" onblur="this.placeholder='return Amount'" autocomplete="off" tabindex="5" />
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="returnStatus">Return Status: </label><input type="checkbox" id="returnStatus" name="returnStatus" formControlName="returnStatus" tabindex="6" />
+          </div>
+        </div>
+        <!--<div class="form-row">
+          <div class="form-group">
+            <br />
+            <label for="returnStatus">Number of Seats: {{selectedSeats.length}}</label>
+            <textarea id="seats" name="seats" formControlName="seats" rows="3" tabindex="7" class="form-control">{{sits}}</textarea>
+            <input type="hidden" id="ids" name="ids" formControlName="ids" />
+          </div>
+        </div>-->
+      </div>
+      <div class="col-md-4">
+        <div class="row">
+          <div class="col-sm-4"><strong style="height:100px;width:100px;padding:4px;border:solid;border-width:1px;color:white;background-color:red">Reserve Seat</strong></div>
+          <div class="col-sm-4"><strong style="height:100px;width:100px;padding:4px;border:solid;border-width:1px;color:white;background-color:green">Selected Seat</strong></div>
+          <div class="col-sm-4"><strong style="height:100px;width:100px;padding:4px;border:solid;border-width:1px;color:white;background-color:cornflowerblue">Empty Seat</strong></div>
+        </div>
+
+        <div style="width:320px;border-color:grey;border:solid;border-width:1px;margin:5px">
+          <div>
+            <label style="padding:20px;"><i class="fa fa-arrow-right"></i>Entrance</label>
+            <label style="padding:20px;"><i class="fa fa-tachometer"></i>Engine</label>
+            <label style="padding:20px;"><i class="fa fa-user"></i>Driver</label>
+          </div>
+          <div>
+            <table style="width:100%;">
+              <tr *ngFor="let sd of listScheduleDetail">
+                <td *ngFor="let sds of sd.vmScheduleDetailSeats;let i = index">
+                  <div *ngIf="sds.scheduleStatus !== ''" style="text-align: center;border-color:grey;border:solid;border-width:1px;color:white;" [ngStyle]="{'background-color':sds.seatColor }" (click)="book($event, sds);">{{sds.seatNo}}</div>
+                  <div *ngIf="sds.scheduleStatus === ''" style="min-width: 32px" ></div>
+                </td>
+              </tr>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    
+  </form>
+
+  <p *ngIf="!listBooking"><em>Loading...</em></p>
+  <h4>List of {{ title }}</h4>
+  <div style="height: 350px; overflow: auto">
+    <table class='table table-hover table-condensed table-striped' *ngIf="listBooking">
+      <thead>
+        <tr>
+          <th>CustomerName</th>
+          <th>CustomerMobile</th>
+          <th>Price</th>
+          <th>Seat(s)</th>
+          <th>BookedDate</th>
+          <th>BookedStatus</th>
+          <th>CancelDate</th>
+          <th>ReturnAmount</th>
+          <th>ReturnStatus</th>
+          <th>BusName</th>
+          <th>BusType</th>
+          <th>DepartureTime</th>
+          <th>ArrivalTime</th>
+          <th>RouteName</th>
+          <th class="text-right">Options</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of listBooking">
+          <td>{{ item.customerName }}</td>
+          <td>{{ item.customerMobile }}</td>
+          <td>{{ item.price }}</td>
+          <td>{{ item.seat }}</td>
+          <td>{{ item.bookedDate }}</td>
+          <td>{{ item.bookedStatus }}</td>
+          <td>{{ item.cancelDate }}</td>
+          <td>{{ item.returnAmount }}</td>
+          <td>{{ item.returnStatus }}</td>
+          <td>{{ item.busName }}</td>
+          <td>{{ item.busType }}</td>
+          <td>{{ item.departureTime }}</td>
+          <td>{{ item.arrivalTime }}</td>
+          <td>{{ item.routeName }}</td>
+          <td>
+            <div class="pull-right">
+              <!--<a href="#" title="Edit Record" class="btn btn-outline-secondary btn-sm waves-effect waves-light m-1" (click)="edit($event, item)">
+                <i class="fa fa-edit"></i> Edit
+              </a>
+              |-->
+              <a href="#" title="Delete Record" class="btn btn-outline-secondary btn-sm waves-effect waves-light m-1" (click)="delete($event, item)">
+                <i class="fa fa-trash-o"></i> Delete
+              </a>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

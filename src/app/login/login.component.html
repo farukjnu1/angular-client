@@ -1,0 +1,38 @@
+<div>
+  <h1 style="text-align:center">Welcome to Booking System</h1>
+
+  <h4>{{title}}</h4>
+
+  <form id="loginForm" [formGroup]="loginForm" #f="ngForm" (ngSubmit)="login()">
+    <div class="row">
+      <div class="col-md-4">
+        <div class="form-row">
+          <div class="form-group">
+            <label for="userName">User Name: </label>
+            <input type="text" id="userName" name="userName" formControlName="userName" class="form-control input-sm" placeholder="user Name" required
+                   onfocus="this.placeholder=''" onblur="this.placeholder='user Name'" autocomplete="off" tabindex="1" />
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="userPass">User Pass: </label>
+            <input type="text" id="userPass" name="userPass" formControlName="userPass" class="form-control input-sm" placeholder="user Pass" required
+                   onfocus="this.placeholder=''" onblur="this.placeholder='user Pass'" autocomplete="off" tabindex="1" />
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <button type="button" class="btn btn-secondary" (click)="reset()" tabindex="5">
+              <i class="fa fa-refresh"></i> Reset
+            </button>
+            <button type="submit" class="btn btn-primary" form="loginForm" [disabled]="!f.valid" tabindex="4">
+              <i class="fa fa-check-square-o"></i> Login
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4"></div>
+      <div class="col-md-4"></div>
+    </div>
+  </form>
+</div>

@@ -1,0 +1,25 @@
+<div>
+  <h1 style="text-align:center">Cascade Data Loading Example</h1>
+
+  <h4>{{title}}</h4>
+
+  <h2>Division District</h2>
+  <div class="form-row">
+    <div class="form-group form-inline">
+      <label for="startPoint">Division</label>
+      <select class="form-control" id="division" name="division" [(ngModel)]="division" (change)="changeDivision();">
+        <option value="0">-- Select Division --</option>
+        <option *ngFor="let div of listDivision" value={{div.id}}>
+          {{div.name}} {{div.bnName}}
+        </option>
+      </select>
+      <label for="endPoint">End Point</label>
+      <select class="form-control" id="district" name="district" [(ngModel)]="district">
+        <option value="0">-- Select District --</option>
+        <option *ngFor="let dis of listDistrict" value={{dis.id}}>
+          {{dis.name}} {{dis.bnName}}
+        </option>
+      </select>
+    </div>
+  </div>
+</div>

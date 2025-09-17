@@ -1,0 +1,103 @@
+<div>
+  <h1 style="text-align:center">Welcome to Booking System</h1>
+
+  <h4>Add New {{title}}</h4>
+
+  <form id="busForm" [formGroup]="busForm" #f="ngForm" (ngSubmit)="onSubmit()">
+    <div class="row">
+      <div class="col-md-4">
+        <div class="form-row">
+          <div class="form-group">
+            <input type="hidden" id="id" name="id" />
+            <label for="busName">Bus Name: </label>
+            <input type="text" id="busName" name="busName" formControlName="busName" class="form-control input-sm" placeholder="bus name" required
+                   onfocus="this.placeholder=''" onblur="this.placeholder='bus Name'" autocomplete="off" tabindex="1" />
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="startPoint">Bus Type: </label>
+            <input type="radio" id="busType" name="busType" formControlName="busType" value="NonAC" />NonAC
+            <input type="radio" id="busType" name="busType" formControlName="busType" value="AC" />AC
+
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="form-row">
+          <div class="form-group">
+            <label for="endPoint">No of Seat: </label>
+            <select id="noOfSeat" name="noOfSeat" formControlName="noOfSeat" class="form-control input-sm" required>
+              <option value="">--Select Number of Seats--</option>
+              <option value="40">40</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="fitnessStatus">Fitness Status: </label>
+            <select id="fitnessStatus" name="fitnessStatus" formControlName="fitnessStatus" class="form-control input-sm">
+              <option value="">Fitness Status</option>
+              <option value="true">Ok</option>
+              <option value="false">Not Ok</option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="form-row">
+          <div class="form-group">
+            <input type="hidden" id="id" name="id" />
+            <label for="licenseNo">License No: </label>
+            <input type="text" id="licenseNo" name="licenseNo" formControlName="licenseNo" class="form-control input-sm" placeholder="license No"
+                   onfocus="this.placeholder=''" onblur="this.placeholder='license No'" />
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <button type="button" class="btn btn-secondary" (click)="reset()" tabindex="5">
+              <i class="fa fa-refresh"></i> Reset
+            </button>
+            <button type="submit" class="btn btn-primary" form="busForm" [disabled]="!f.valid" tabindex="4">
+              <i class="fa fa-check-square-o"></i> Save
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+      
+  </form>
+
+  <p *ngIf="!listBus"><em>Loading...</em></p>
+  <h4>List of {{ title }}</h4>
+  <div style="height: 350px;overflow: auto">
+    <table class="table table-hover table-condensed table-striped" *ngIf="listBus">
+      <thead>
+        <tr>
+          <th>Bus Name</th>
+          <th>Bus Type</th>
+          <th>Number of Seat</th>
+          <th class="text-right">Options</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of listBus">
+          <td>{{ item.busName }}</td>
+          <td>{{ item.busType }}</td>
+          <td>{{ item.noOfSeat }}</td>
+          <td>
+            <div class="pull-right">
+              <a href="#" title="Edit Record" class="btn btn-outline-secondary btn-sm waves-effect waves-light m-1" (click)="edit($event, item)">
+                <i class="fa fa-edit"></i> Edit
+              </a>
+              |
+              <a href="#" title="Delete Record" class="btn btn-outline-secondary btn-sm waves-effect waves-light m-1" (click)="delete($event, item)">
+                <i class="fa fa-trash-o"></i> Delete
+              </a>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
