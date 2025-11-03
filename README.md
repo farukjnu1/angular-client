@@ -1,28 +1,62 @@
-# AngularClient
+🌐 ASP.NET Core Web API + Angular Integration
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 7.3.3.
+A starter template for an ASP.NET Core Web API backend that serves an Angular frontend on the same domain.
+This project demonstrates how to integrate an Angular SPA with a secure, structured Web API using CORS-free requests and same-domain hosting.
 
-## Development server
+-------------------------------
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+🧭 Overview
 
-## Code scaffolding
+This template shows how to:
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+Build a RESTful API using ASP.NET Core Web API
 
-## Build
+Serve an Angular application from the same server and domain
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
+Handle CRUD operations and API routing without CORS issues
 
-## Running unit tests
+Provide a single project structure for both frontend and backend
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+This approach is ideal for full-stack development where you want your Angular app and ASP.NET Core Web API to live in the same project or domain.
 
-## Running end-to-end tests
+---------------------------------------
 
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
+🚀 Features
 
-## Further help
+⚡ Same-domain API and frontend — avoids CORS configuration
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
-"# angular-client" 
+📦 RESTful API endpoints for Angular consumption
+
+🧩 Sample CRUD operations using in-memory or database data
+
+💬 JSON-based communication — seamless integration with Angular $http or HttpClient
+
+🛠️ Structured project — clear separation of controllers, services, and models
+
+🔧 Easy Angular deployment — Angular dist folder served by ASP.NET Core
+
+--------------------------------------------
+
+🧩 Technologies Used
+| Component           | Description                          |
+| ------------------- | ------------------------------------ |
+| **Frontend**        | Angular 14+                          |
+| **Backend**         | ASP.NET Core 6/8 Web API             |
+| **Database**        | SQL Server / In-Memory DB (optional) |
+| **Language**        | C#                                   |
+| **Package Manager** | NuGet (Backend), NPM (Frontend)      |
+| **IDE**             | Visual Studio / VS Code              |
+
+------------------------------------------
+
+🧠 Future Enhancements
+
+🔒 Add JWT Authentication for secure API access
+
+📦 Integrate Entity Framework Core for persistent storage
+
+🗂️ Add repository & service layers for cleaner architecture
+
+📊 Integrate Swagger/OpenAPI documentation
+
+⚡ Add Angular routing and modular components
